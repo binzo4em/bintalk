@@ -1,0 +1,58 @@
+version: "3"
+services:
+  bintalk-frontend:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./frontend
+    container_name: bintalk-frontend
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+    stdin_open: true
+    # ports : 개발 모드 시 사용, 운영 모드 테스트 시 주석 처리
+    ports: 
+      - "8080:8080"
+
+  # frontend, backend 앞에서 요청을 분기하는 proxy 역할 수행
+  # /api 관련 요청은 backend, /api를 제외한 나머지는 frontend
+  bintalk-nginx: 
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    container_name: bintalk-nginx
+    ports: 
+      - "80:80"
+
+  bintalk-backend:
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./backend
+    container_name: bintalk-backend
+    volumes:
+      - /app/node_modules
+      - ./backend:/app
+    ports:
+      - "3000:3000"
+    environment: 
+      # 배포 시 MARIADB_HOST 변경, USER와 PASSWORD 정보는 배포 툴의 환경 변수 이용
+      MARIADB_HOST: mariadb
+      MARIADB_PORT: 3306 
+      MARIADB_USER: root 
+      MARIADB_USER_PASSWORD: qwer1234
+      MARIADB_DATABASE: skte
+        
+
+  # mariadb : 개발 시 사용, 배포 시 주석 처리
+  mariadb:
+    build: ./mariadb
+    restart: unless-stopped
+    container_name: bintalk-mariadb
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mariadb/mariadb_data:/var/lib/mysql
+      - ./mariadb/sqls/:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_ROOT_PASSWORD: qwer1234
+      MYSQL_DATABASE: skte

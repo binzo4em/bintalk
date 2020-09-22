@@ -1,0 +1,18 @@
+version: "3"
+services:
+  bintalk-frontend:
+    image: kilo1089/bintalk-frontend
+    container_name: bintalk-frontend
+    stdin_open: true
+
+  bintalk-nginx:
+    image: kilo1089/bintalk-nginx
+    container_name: bintalk-nginx
+    ports:
+      - "80:80"
+
+  bintalk-backend:
+    image: kilo1089/bintalk-backend
+    container_name: bintalk-backend
+    ports:
+      - "3000:3000"

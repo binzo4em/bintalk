@@ -1,0 +1,60 @@
+language: generic
+
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  # 테스트를 위한 개발 이미지 빌드
+  - docker build -t kilo1089/bintalk-frontend-test -f ./frontend/Dockerfile.dev ./frontend
+
+script:
+  - docker run -e CI=true kilo1089/bintalk-frontend-test npm run test
+
+after_success:
+  # 테스트 성공 후 각각의 운영 이미지 빌드, 도커 허브 아이디를 사용해야 함 (도커 허브 아이디/이미지 이름)
+  - docker build -t kilo1089/bintalk-frontend ./frontend
+  - docker build -t kilo1089/bintalk-backend --build-arg MARIADB_PASSWORD=$MARIADB_PASSWORD ./backend
+  - docker build -t kilo1089/bintalk-nginx ./nginx
+  
+  # Travis의 환경 변수를 사용
+  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
+
+  # 도커 허브 아이디를 사용해야 함 (도커 허브 아이디/이미지 이름)
+  - docker push kilo1089/bintalk-frontend
+  - docker push kilo1089/bintalk-backend
+  - docker push kilo1089/bintalk-nginx
+
+before_deploy:
+  - mkdir -p before-deploy
+  - cp scripts/*.sh before-deploy/
+  - cp appspec.yml before-deploy/
+  - echo "export DOCKER_HUB_ID=$DOCKER_HUB_ID" >> env.sh && echo "export DOCKER_HUB_PASSWORD=$DOCKER_HUB_PASSWORD" >> env.sh
+  - cp env.sh before-deploy/
+  - cp docker-compose-deploy.yml before-deploy/docker-compose.yml
+  - cd before-deploy && zip -r deploy *
+  - cd ../ && mkdir -p deploy
+  - mv before-deploy/deploy.zip deploy/
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: bintalk-webservice-build
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: private
+    local_dir: deploy
+    wait-until-deployed: true
+
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: bintalk-webservice-build
+    key: deploy.zip
+    bundle_type: zip
+    application: bintalk-webservice
+    deployment_group: bintalk-webservice
+    region: ap-northeast-2
+    wait-until-deployed: true
