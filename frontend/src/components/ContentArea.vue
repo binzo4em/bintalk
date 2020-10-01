@@ -53,6 +53,9 @@ export default {
   created() {
     this.getRandomQuestion();
   },
+  mounted() {
+    this.$refs.inputText.focus();
+  },
   computed: {
     ...mapState('english', [
       'engDatas',
