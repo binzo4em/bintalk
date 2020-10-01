@@ -22,9 +22,12 @@
             label="영어 문장을 입력하세요"
             >
         </li>
-        <li><button class="btn btn--transparent" v-on:click="getCorrectAnswer">정답 확인</button></li>
+        <!-- <li><button class="btn btn--transparent" v-on:click="getCorrectAnswer">정답 확인</button></li>
         <li><button class="btn btn--transparent" v-on:click="showHint">힌트 보기</button></li>
-        <li><button class="btn btn--transparent" v-on:click="refresh">갱신 하기</button></li>
+        <li><button class="btn btn--transparent" v-on:click="refresh">갱신 하기</button></li> -->
+        <li><a href="#" class="btn btn--transparent" v-on:click="getCorrectAnswer">정답 확인</a></li>
+        <li><a href="#" class="btn btn--transparent" v-on:click="showHint">힌트 보기</a></li>
+        <li><a href="#" class="btn btn--transparent" v-on:click="refresh">갱신 하기</a></li>
       </ul>
     </div>
 
@@ -98,6 +101,8 @@ export default {
           this.$refs.mainH2Tag.style.color = 'red';
         }
       }
+
+      this.$refs.inputText.focus();
     },
     showHint() {
       this.subText = `"${this.engDatas.hint}"`;

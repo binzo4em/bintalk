@@ -3,7 +3,7 @@
 
         <div class="icon-group float--left">
             <div class="logo">
-                <a href="#">GitHub</a>
+                <a href="#">Binzo</a>
             </div>
             <div class="sound" v-bind:class="{ soundOff: !soundOn }" v-on:click="toggleSoundImage">
 
