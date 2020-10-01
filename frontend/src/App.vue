@@ -1,56 +1,34 @@
 <template>
-  <v-app>
-    <div class="body__container">
-
+  <div class="body__container">
     <!-- HEADER -->
     <header class="section">
-      HEADER
+      <Header/>
     </header>
 
-    <!-- SETTING AREA -->
-    <section class="section section--setting">
-      <SettingArea/>
-    </section>
-
     <!-- CONTENT AREA -->
-    <section class="section section--content">
+    <section class="section section--visual">
       <ContentArea/>
-    </section>
-
-    <!-- HINT AREA -->
-    <section v-if="showHint" class="section section--hint">
-      <HintArea/>
-    </section>
-
-    <!-- INPUT AREA -->
-    <section class="section section--input">
-      <InputArea/>
     </section>
 
     <!-- FOOTER -->
     <footer class="section">
-      FOOTER
+      <Footer/>
     </footer>
-
   </div>
-  </v-app>
 </template>
 
 <script>
-import SettingArea from '@/components/SettingArea'
+import Header from '@/components/Header'
 import ContentArea from '@/components/ContentArea'
-import HintArea from '@/components/HintArea'
-import InputArea from '@/components/InputArea'
+import Footer from '@/components/Footer'
 import { mapState } from 'vuex'
 
 export default {
   name: 'App',
-
   components: {
-    SettingArea,
+    Header,
     ContentArea,
-    HintArea,
-    InputArea
+    Footer
   },
   computed: {
     ...mapState('english', [
@@ -61,25 +39,8 @@ export default {
 </script>
 
 <style lang="scss">
-@charset "UTF-8";
-// 공통 적용
-.body__container {
-    font-size: 16px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-    color: #333; /* 글자 색상 */
-}
-.section {
-  border: 1px solid grey;
-  margin-top: 10px;
-}
-.section .section--content{
-  display: block;
-}
-header {
-  color: red;
-}
-footer {
-  color: red;
-}
+@import url('./assets/css/reset.css');
+@import url('./assets/css/main.css');
+@import url('./assets/css/main_medium.css') screen and (max-width: 1024px);
+@import url('./assets/css/main_small.css') screen and (max-width: 768px);
 </style>

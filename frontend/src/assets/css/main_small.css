@@ -1,0 +1,63 @@
+/* COMMON */
+.summary__title {
+    /*
+        - 우선순위 점수가 낮아 font-size값을 덮어쓰지 못하는 문제 발생
+        - 클래스를 추가하여 운선순위를 높일 수 있으나 다른 요소에도 영향을 미칠 가능성 있음
+        - !important 키워들 사용하여 우선순위 점수와 상관없이 해당 속성과 값으로 덮어쓴다.
+    */
+    font-size: 34px !important;
+}
+.summary__description {
+    font-size: 22px;
+}
+
+
+/* FEATURE */
+.section--feature .tiles li {
+    /* 100%로 설정하여 너비 전체를 사용하게 되므로 요소들이 아래로 밀린다. */
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+
+/* WHERE IS */
+#map {
+    /*
+        - -20px를 사용하기 위해서 width를 auto로 설정해야 한다.
+        - .inner 부분에 padding 좌우 값이 20px로 설정되어있기 때문에 -20px를 설정하여 여백을 제거한다.
+        - %설정은 부모 요소에 영향을 받는다.
+    */
+    width: auto;
+    margin: 40px -20px 0 -20px;
+    border-left: none;
+    border-right: none;   
+}
+
+
+/* PRICING */
+.section--pricing .card {
+    display: block;
+}
+.section--pricing .card .cell2 {
+    border-left: none;
+    border-top: 1px solid #e5e5e5;
+}
+
+
+/* FOOTER */
+footer .site-links {
+    /*
+        - display: flex;에서 text-align: center;는 동작하지 않는다.
+    */
+    float: none;
+    display: block;
+    text-align: center;
+}
+footer .site-links:first-child {
+    margin-bottom: 20px;
+}
+footer .site-links li {
+    /* display: inline;은 text를 다루는데 최적화 되어있다.*/
+    display: inline;
+}

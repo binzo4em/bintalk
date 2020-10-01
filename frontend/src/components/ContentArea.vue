@@ -1,29 +1,31 @@
 <template>
-  <div>
-    <div class="text-center">
-      <v-chip
-        class="ma-2"
-        color="primary"
-        text-color="white"
-      >
-        <v-avatar left>
-          <v-icon>mdi-account-circle</v-icon>
-        </v-avatar>
-        {{ question }}
-      </v-chip>
+  <div class="inner">
+    <div class="summary">
+        <h2 class="summary__title" ref="mainH2Tag">
+            {{ mainText }}
+        </h2>
+        <p class="summary__description">
+            {{ subText }}
+        </p>
     </div>
 
-    <div v-if="showAnswer" class="resultArea text-center">
-      <div>
-        [입력] {{ myAnswer }}
-      </div>
-      <div>
-        [정답] {{ correctAnswer }}
-      </div>
-    </div>
-
-    <div v-if="showEffect" class="resultEffect text-center">
-      Perfect!!
+    <div class="input-group">
+      <ul>
+        <li>
+          <input 
+            type="text" 
+            class="input--text" 
+            placeholder="영어 문장을 입력하세요"
+            ref="inputText"
+            v-on:keypress.enter="getCorrectAnswer"
+            v-on:input="bindText" 
+            label="영어 문장을 입력하세요"
+            >
+        </li>
+        <li><button class="btn btn--transparent" v-on:click="getCorrectAnswer">정답 확인</button></li>
+        <li><button class="btn btn--transparent" v-on:click="showHint">힌트 보기</button></li>
+        <li><button class="btn btn--transparent" v-on:click="refresh">갱신 하기</button></li>
+      </ul>
     </div>
 
   </div>
@@ -38,39 +40,81 @@ const uri = '/api/getRandomQuestion'
 export default {
   data() {
     return {
-      answer: '',
+      defaultSubText: '위 한국어를 영어로 작성해 보세요.',
+      defaultWarnText: '영어 문장을 입력하세요!',
+      subText: '위 한국어를 영어로 작성해 보세요.',
+      audio: new Audio(require('@/assets/audio/yeah.mp3')),
+      isCorrect: false
     }
   },
-  created () {
-    this.getRandomQuestion()
+  created() {
+    this.getRandomQuestion();
   },
   computed: {
     ...mapState('english', [
       'engDatas',
-      'showAnswer',
-      'showEffect',
-      'myAnswer',
-      'correctAnswer'
+      'mainText'
     ]),
-    question: {
-      get () {
-        return this.engDatas.question
-      }
-    },
+    ...mapState('options', [
+      'soundOn'
+    ])
   },
   methods: {
     ...mapMutations('english', [
-      'setEngDatas'
+      'setEngDatas',
+      'setMainText',
     ]),
     ...mapActions('english', [
       'getRandomQuestion'
-    ])
+    ]),
+    bindText(event) {
+      if(event.target.value.length == 0) {
+        this.subText = this.defaultSubText;
+      }else {
+        this.subText = event.target.value;
+      }
+    },
+    getCorrectAnswer() {
+      const inputText = this.$refs.inputText.value;
+      if (inputText.length == 0) {
+        this.subText = this.defaultWarnText;
+        this.$refs.inputText.focus();
+        return;
+      }
+
+      this.setMainText(this.engDatas.answer_1);
+
+      if (inputText !== '') {
+        // .(마침표) 공백으로 변경, trim으로 앞뒤 공백 잘라내기
+        if (inputText.replace('.', '').trim() === this.engDatas.answer_1.replace('.', '').trim()) {
+          this.isCorrect = true;
+          this.$refs.mainH2Tag.style.color = 'yellow';
+
+          if (this.soundOn) {
+            this.audio.volume = 0.5;
+            this.audio.play();
+          }
+        }else {
+          this.$refs.mainH2Tag.style.color = 'red';
+        }
+      }
+    },
+    showHint() {
+      this.subText = `"${this.engDatas.hint}"`;
+      this.$refs.inputText.focus();
+    },
+    refresh() {
+      this.subText = this.defaultSubText;
+      this.getRandomQuestion();
+      this.$refs.inputText.value = '';
+      this.$refs.inputText.focus();
+      this.$refs.mainH2Tag.style.color = '#fff';
+      this.isCorrect = false;
+    }
   }
 }
 </script>
 
 <style lang="scss">
-.content-area {
-  display: block;
-}
+
 </style>
