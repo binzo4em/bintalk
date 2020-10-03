@@ -40,7 +40,7 @@ services:
       MARIADB_PORT: 3306 
       MARIADB_USER: root 
       MARIADB_USER_PASSWORD: qwer1234
-      MARIADB_DATABASE: skte
+      MARIADB_DATABASE: bintalk
         
 
   # mariadb : 개발 시 사용, 배포 시 주석 처리
@@ -55,4 +55,4 @@ services:
       - ./mariadb/sqls/:/docker-entrypoint-initdb.d/
     environment:
       MYSQL_ROOT_PASSWORD: qwer1234
-      MYSQL_DATABASE: skte
+      MYSQL_DATABASE: bintalk

@@ -2,9 +2,9 @@ FROM node:alpine
 
 ARG MARIADB_PASSWORD
 ENV PORT=3000 \
-    MARIADB_HOST=skte.cynaj14cysak.ap-northeast-2.rds.amazonaws.com \
+    MARIADB_HOST=bintalk.cynaj14cysak.ap-northeast-2.rds.amazonaws.com \
     MARIADB_PORT=3306 \
-    MARIADB_DATABASE=skte \
+    MARIADB_DATABASE=bintalk \
     MARIADB_USER=binzo \
     MARIADB_USER_PASSWORD=$MARIADB_PASSWORD
     
