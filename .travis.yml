@@ -41,8 +41,8 @@ before_deploy:
 
 deploy:
   - provider: s3
-    access_key_id: $AWS_ACCESS_KEY
-    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    access_key_id: $AWS_ACCESS_KEY_KILO9
+    secret_access_key: $AWS_SECRET_ACCESS_KEY_KILO9
     bucket: bintalk-webservice-build
     region: ap-northeast-2
     skip_cleanup: true
@@ -51,12 +51,12 @@ deploy:
     wait-until-deployed: true
 
   - provider: codedeploy
-    access_key_id: $AWS_ACCESS_KEY
-    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    access_key_id: $AWS_ACCESS_KEY_KILO9
+    secret_access_key: $AWS_SECRET_ACCESS_KEY_KILO9
     bucket: bintalk-webservice-build
     key: deploy.zip
     bundle_type: zip
-    application: bintalk-webservice
-    deployment_group: bintalk-webservice
+    application: bintalk
+    deployment_group: bintalk
     region: ap-northeast-2
     wait-until-deployed: true
