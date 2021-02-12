@@ -1,8 +1,8 @@
 version: "3"
 services:
-  bintalk-frontend:
+  frontend:
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
       context: ./frontend
     container_name: bintalk-frontend
     volumes:
@@ -10,12 +10,12 @@ services:
       - ./frontend:/app
     stdin_open: true
     # ports : 개발 모드 시 사용, 운영 모드 테스트 시 주석 처리
-    ports: 
-      - "8080:8080"
+    #ports: 
+    #  - "8080:8080"
 
   # frontend, backend 앞에서 요청을 분기하는 proxy 역할 수행
   # /api 관련 요청은 backend, /api를 제외한 나머지는 frontend
-  bintalk-nginx: 
+  nginx: 
     restart: always
     build:
       dockerfile: Dockerfile
@@ -24,9 +24,9 @@ services:
     ports: 
       - "80:80"
 
-  bintalk-backend:
+  backend:
     build: 
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
       context: ./backend
     container_name: bintalk-backend
     volumes:
@@ -38,23 +38,24 @@ services:
       # 배포 시 MARIADB_HOST 변경, USER와 PASSWORD 정보는 배포 툴의 환경 변수 이용
       MARIADB_HOST: bintalk-mariadb
       MARIADB_PORT: 3306 
-      MARIADB_USER: root 
+      MARIADB_USER: root
       MARIADB_USER_PASSWORD: qwer1234
       MARIADB_DATABASE: bintalk
         
-
-  # mariadb : 개발 시 사용, 배포 시 주석 처리
-  bintalk-mariadb:
+  mariadb:
     build: 
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
       context: ./mariadb
     restart: unless-stopped
     container_name: bintalk-mariadb
     ports:
       - "3306:3306"
-    volumes:
-      - ./mariadb/mariadb_data:/var/lib/mysql
-      - ./mariadb/sqls/:/docker-entrypoint-initdb.d/
+    #volumes:
+    #  - ./mariadb/mariadb_data:/var/lib/mysql
+    #  - ./mariadb/sqls/:/docker-entrypoint-initdb.d/
     environment:
       MYSQL_ROOT_PASSWORD: qwer1234
-      MYSQL_DATABASE: bintalk
+      #MYSQL_DATABASE: bintalk
+      MARIADB_DATABASE: bintalk
+      MARIADB_USER: binzo
+      MARIADB_USER_PASSWORD: qwer1234

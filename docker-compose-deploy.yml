@@ -1,21 +1,28 @@
 version: "3"
 services:
-  bintalk-frontend:
+  frontend:
     restart: always
     image: kilo1089/bintalk-frontend
     container_name: bintalk-frontend
     stdin_open: true
 
-  bintalk-nginx:
+  nginx:
     restart: always
     image: kilo1089/bintalk-nginx
     container_name: bintalk-nginx
     ports:
       - "80:80"
 
-  bintalk-backend:
+  backend:
     restart: always
     image: kilo1089/bintalk-backend
     container_name: bintalk-backend
     ports:
       - "3000:3000"
+
+  mariadb:
+    restart: always
+    image: kilo1089/bintalk-mariadb
+    container_name: bintalk-mariadb
+    ports:
+      - "3306:3306"

@@ -1,6 +1,4 @@
 FROM mariadb:10.4
 
-#COPY ./mariadb_data /var/lib/mysql
-COPY ./sqls /docker-entrypoint-initdb.d/
 COPY ./mariadb.cnf /etc/mysql/mariadb.cnf
 #ADD ./mariadb.cnf /etc/mysql/mariadb.cnf
