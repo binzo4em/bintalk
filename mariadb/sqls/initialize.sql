@@ -96,6 +96,6 @@ INSERT INTO bintalk.tb_go(id, question, answer_1, hint, description) VALUES(1, '
 
 INSERT INTO bintalk.tb_be(id, question, answer_1, hint, description) VALUES(1, '다이어트 중이다.', 'be on a diet', 'be 사용', '가만히 있는 그 주어를 묘사하자');
 
-INSERT INTO bintalk.tb_be-ing(id, question, answer_1, hint, description) VALUES(1, '저는 지금 아침 먹는 중이에요.', 'I am having breakfast.', 'be-ing 사용', '현재 무엇을 하는 중이다.');
+INSERT INTO bintalk.tb_being(id, question, answer_1, hint, description) VALUES(1, '저는 지금 아침 먹는 중이에요.', 'I am having breakfast.', 'be-ing 사용', '현재 무엇을 하는 중이다.');
 
 

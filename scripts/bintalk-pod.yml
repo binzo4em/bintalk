@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-bintalk-frontend
+  labels:
+    svc: bintalk
+spec:
+  containers:
+  - name: bintalk-frontend
+    image: kilo1089/bintalk-frontend
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-bintalk-backend
+  labels:
+    svc: bintalk
+spec:
+  containers:
+  - name: bintalk-backend
+    image: kilo1089/bintalk-backend
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-bintalk-mariadb
+  labels:
+    svc: bintalk
+spec:
+  containers:
+  - name: bintalk-mariadb
+    image: kilo1089/bintalk-mariadb
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-bintalk-nginx
+  labels:
+    svc: bintalk
+spec:
+  containers:
+  - name: bintalk-nginx
+    image: kilo1089/bintalk-nginx
+    ports:
+    - containerPort: 80
+      protocol: TCP
+    

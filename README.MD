@@ -1,5 +1,7 @@
-# Node.js Version
-- v12.16.2
+# Info
+- Node.js : v12.16.2
+- Development Test : docker-compose.yml
+- Production Test : docker-compose-prd.yml
 
 ## 2020.10.01 (목) - 3번째 수정
 ## 작업 내역
