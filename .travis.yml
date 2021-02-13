@@ -32,6 +32,7 @@ after_success:
 before_deploy:
   - mkdir -p before-deploy
   - cp scripts/*.sh before-deploy/
+  - cp scripts/*.yml before-deploy/
   - cp appspec.yml before-deploy/
   - echo "export DOCKER_HUB_ID=$DOCKER_HUB_ID" >> env.sh && echo "export DOCKER_HUB_PASSWORD=$DOCKER_HUB_PASSWORD" >> env.sh
   - cp env.sh before-deploy/
