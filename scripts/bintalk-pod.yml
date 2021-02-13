@@ -26,8 +26,8 @@ spec:
     image: kilo1089/bintalk-backend
   - name: bintalk-mariadb
     image: kilo1089/bintalk-mariadb
-  - name: bintalk-nginx
-    image: kilo1089/bintalk-nginx
-    ports:
-    - containerPort: 80
-      protocol: TCP
+  # - name: bintalk-nginx
+  #   image: kilo1089/bintalk-nginx
+  #   ports:
+  #   - containerPort: 80
+  #     protocol: TCP
