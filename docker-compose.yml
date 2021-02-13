@@ -36,11 +36,11 @@ services:
       - "3000:3000"
     environment: 
       # 배포 시 MARIADB_HOST 변경, USER와 PASSWORD 정보는 배포 툴의 환경 변수 이용
-      MARIADB_HOST: bintalk-mariadb
-      MARIADB_PORT: 3306 
-      MARIADB_USER: root 
-      MARIADB_USER_PASSWORD: qwer1234
-      MARIADB_DATABASE: bintalk
+      MYSQL_HOST: bintalk-mariadb
+      MYSQL_PORT: 3306 
+      MYSQL_USER: root 
+      MYSQL_PASSWORD: qwer1234
+      MYSQL_DATABASE: bintalk
         
 
   # mariadb : 개발 시 사용, 배포 시 주석 처리

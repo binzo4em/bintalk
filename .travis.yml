@@ -16,8 +16,8 @@ script:
 after_success:
   # 테스트 성공 후 각각의 운영 이미지 빌드, 도커 허브 아이디를 사용해야 함 (도커 허브 아이디/이미지 이름)
   - docker build -t kilo1089/bintalk-frontend ./frontend
-  - docker build -t kilo1089/bintalk-backend --build-arg MARIADB_USER_PASSWORD=$MARIADB_USER_PASSWORD ./backend
-  - docker build -t kilo1089/bintalk-mariadb --build-arg MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD MARIADB_DATABASE=$MARIADB_DATABASE MARIADB_USER=$MARIADB_USER MARIADB_USER_PASSWORD=$MARIADB_USER_PASSWORD ./mariadb
+  - docker build -t kilo1089/bintalk-backend --build-arg MYSQL_PASSWORD=$MYSQL_PASSWORD ./backend
+  - docker build -t kilo1089/bintalk-mariadb --build-arg MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD MYSQL_DATABASE=$MYSQL_DATABASE MYSQL_USER=$MYSQL_USER MYSQL_PASSWORD=$MYSQL_PASSWORD ./mariadb
   - docker build -t kilo1089/bintalk-nginx ./nginx
   
   # Travis의 환경 변수를 사용

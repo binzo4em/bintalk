@@ -55,7 +55,6 @@ services:
     #  - ./mariadb/sqls/:/docker-entrypoint-initdb.d/
     environment:
       MYSQL_ROOT_PASSWORD: qwer1234
-      #MYSQL_DATABASE: bintalk
-      MARIADB_DATABASE: bintalk
-      MARIADB_USER: binzo
-      MARIADB_USER_PASSWORD: qwer1234
+      MYSQL_DATABASE: bintalk
+      MYSQL_USER: binzo
+      MYSQL_PASSWORD: qwer1234
