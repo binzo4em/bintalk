@@ -1,4 +1,18 @@
 apiVersion: v1
+kind: Service
+metadata: 
+  name: service-nodeport-bintalk
+spec:
+  ports:
+    - name: web-port
+      port: 80
+      targetPort: 80
+      nodePort: 80
+  selector:
+    app: proxy
+  type: NodePort
+---
+apiVersion: v1
 kind: Pod
 metadata:
   name: pod-bintalk-frontend
@@ -8,19 +22,6 @@ spec:
   containers:
   - name: bintalk-frontend
     image: kilo1089/bintalk-frontend
----
-apiVersion: v1
-kind: Service
-metadata: 
-  name: service-nodeport-bintalk
-spec:
-  ports:
-    - name: web-port
-      port: 80
-      target: 80
-  selector:
-    app: proxy
-  type: NodePort
 ---
 apiVersion: v1
 kind: Pod
