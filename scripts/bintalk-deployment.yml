@@ -16,6 +16,16 @@ spec:
     metadata:
       labels:
         svc: bintalk
+    spec:
+      containers:
+      - name: bintalk-frontend
+        image: kilo1089/bintalk-frontend
+        ports:
+        - containerPort: 80
+      - name: bintalk-backend
+        image: kilo1089/bintalk-backend
+      - name: bintalk-mariadb
+        image: kilo1089/bintalk-mariadb
 ---
 apiVersion: v1
 kind: Service
@@ -30,18 +40,3 @@ spec:
   selector:
     svc: bintalk
   type: NodePort
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: pod-bintalk
-  labels:
-    svc: bintalk
-spec:
-  containers:
-  - name: bintalk-frontend
-    image: kilo1089/bintalk-frontend
-  - name: bintalk-backend
-    image: kilo1089/bintalk-backend
-  - name: bintalk-mariadb
-    image: kilo1089/bintalk-mariadb
