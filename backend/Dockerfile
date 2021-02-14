@@ -2,10 +2,10 @@ FROM node:12-alpine
 
 ARG MYSQL_PASSWORD
 ENV PORT=3000 \
-    MYSQL_HOST=4-am.co.kr \
+    MYSQL_HOST=bintalk-mariadb \
     MYSQL_PORT=3306 \
     MYSQL_DATABASE=bintalk \
-    MYSQL_USER=root \
+    MYSQL_USER=binzo \
     MYSQL_PASSWORD=$MYSQL_PASSWORD
     
 WORKDIR /app
