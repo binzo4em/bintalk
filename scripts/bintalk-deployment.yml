@@ -24,8 +24,8 @@ spec:
         - containerPort: 80
       - name: bintalk-backend
         image: kilo1089/bintalk-backend
-      - name: bintalk-mariadb
-        image: kilo1089/bintalk-mariadb
+      # - name: bintalk-mariadb
+      #   image: kilo1089/bintalk-mariadb
 ---
 apiVersion: v1
 kind: Service
