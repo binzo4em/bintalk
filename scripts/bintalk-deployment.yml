@@ -30,13 +30,27 @@ spec:
 apiVersion: v1
 kind: Service
 metadata: 
-  name: service-nodeport-bintalk
+  name: service-nodeport-bintalk-frontend
 spec:
   ports:
-    - name: web-port
+    - name: web-frontend
       port: 80
       targetPort: 80
       nodePort: 30000
+  selector:
+    svc: bintalk
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: service-nodeport-bintalk-backend
+spec:
+  ports:
+    - name: web-backend
+      port: 3000
+      targetPort: 3000
+      nodePort: 3000
   selector:
     svc: bintalk
   type: NodePort
