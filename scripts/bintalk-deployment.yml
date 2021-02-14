@@ -50,7 +50,7 @@ spec:
     - name: web-backend
       port: 3000
       targetPort: 3000
-      nodePort: 3000
+      nodePort: 30001
   selector:
     svc: bintalk
   type: NodePort
