@@ -21,11 +21,16 @@ export default {
   actions: { // 비동기 실행은 actions에서 수행
     getRandomQuestion ({ commit }) {
       console.log('getRandomQuestion is called');
-      axios.get(`${process.env.VUE_APP_BACKEND_HOST}:${process.env.VUE_APP_BACKEND_PORT}/api/getRandomQuestion`)
+      axios.get('http://localhost:3000/api/getRandomQuestion')
         .then(res => {
           commit('setEngDatas', res.data);
           commit('setMainText', res.data.question);
         })
+      // axios.get(`${process.env.VUE_APP_BACKEND_HOST}:${process.env.VUE_APP_BACKEND_PORT}/api/getRandomQuestion`)
+      //   .then(res => {
+      //     commit('setEngDatas', res.data);
+      //     commit('setMainText', res.data.question);
+      //   })
     }
   }
 }
