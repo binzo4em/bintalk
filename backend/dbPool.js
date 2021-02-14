@@ -28,6 +28,7 @@ async function GetTestSentence(){
 async function GetRandomQuestion() {
     let conn, rows;
     try{
+        console.log('GetRandomQuestion is called')
         conn = await pool.getConnection();
         rows = await conn.query("show tables like 'tb%'");
         // 0 ~ 테이블 총 개수 사이의 정수 난수 생성
