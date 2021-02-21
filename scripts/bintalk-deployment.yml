@@ -1,11 +1,56 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: pod-bintalk
-  labels:
-    svc: bintalk
+  name: deployment-bintalk
 spec:
-  containers:
-  - name: bintalk-frontend
-    image: node:12-alpine
-    
+  replicas: 2
+  selector:
+    matchLabels:
+      svc: bintalk
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
+      maxSurge: 50%
+  template:
+    metadata:
+      labels:
+        svc: bintalk
+    spec:
+      containers:
+      - name: bintalk-frontend
+        image: kilo1089/bintalk-frontend
+        ports:
+        - containerPort: 80
+      - name: bintalk-backend
+        image: kilo1089/bintalk-backend
+      # - name: bintalk-mariadb
+      #   image: kilo1089/bintalk-mariadb
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: service-nodeport-bintalk-frontend
+spec:
+  ports:
+    - name: web-frontend
+      port: 80
+      targetPort: 80
+      nodePort: 30000
+  selector:
+    svc: bintalk
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: service-nodeport-bintalk-backend
+spec:
+  ports:
+    - name: web-backend
+      port: 3000
+      targetPort: 3000
+      nodePort: 30001
+  selector:
+    svc: bintalk
+  type: NodePort
